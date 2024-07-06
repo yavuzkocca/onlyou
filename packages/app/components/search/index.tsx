@@ -72,7 +72,7 @@ export const Search = () => {
           </View>
           <View tw="flex-1">
             <Input
-              placeholder="Search for @name or name.eth"
+              placeholder="Search for @name or name"
               value={term}
               ref={inputRef}
               autoFocus

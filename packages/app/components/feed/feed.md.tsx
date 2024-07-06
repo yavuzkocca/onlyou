@@ -268,11 +268,11 @@ const SuggestedUsers = () => {
     });
 
     const filteredArrayWithoutId2 = filteredArray1?.filter(
-        (obj) => obj._id !== idToRemove
+        (obj) => obj.profile_id !== idToRemove
     );
 
     console.log(`FAWI ${isAuthenticated}`);
-    console.log(`FAWI ${JSON.stringify(data?.data)}`);
+    console.log(`FAWI ${JSON.stringify(filteredArray1)}`);
 
     return (
         <>

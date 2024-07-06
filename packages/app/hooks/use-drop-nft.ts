@@ -116,154 +116,101 @@ export const useDropNFT = () => {
   const Contract_Address = process.env.NEXT_PUBLIC_MINTING_CONTRACT;
   const ABI = [
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: "address",
-          name: "_implementation",
-          type: "address",
-        },
+          "internalType": "address",
+          "name": "_implementation",
+          "type": "address"
+        }
       ],
-      stateMutability: "nonpayable",
-      type: "constructor",
+      "stateMutability": "nonpayable",
+      "type": "constructor"
     },
     {
-      anonymous: false,
-      inputs: [
+      "anonymous": false,
+      "inputs": [
         {
-          indexed: true,
-          internalType: "uint256",
-          name: "editionId",
-          type: "uint256",
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "editionId",
+          "type": "uint256"
         },
         {
-          indexed: true,
-          internalType: "address",
-          name: "creator",
-          type: "address",
+          "indexed": true,
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
         },
         {
-          indexed: false,
-          internalType: "uint256",
-          name: "editionSize",
-          type: "uint256",
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "editionSize",
+          "type": "uint256"
         },
         {
-          indexed: false,
-          internalType: "address",
-          name: "editionContractAddress",
-          type: "address",
+          "indexed": false,
+          "internalType": "address",
+          "name": "editionContractAddress",
+          "type": "address"
         },
         {
-          indexed: false,
-          internalType: "string",
-          name: "creatorName",
-          type: "string",
+          "indexed": false,
+          "internalType": "string",
+          "name": "creatorName",
+          "type": "string"
         },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "hasPrivImage",
+          "type": "bool"
+        }
       ],
-      name: "CreatedEdition",
-      type: "event",
+      "name": "CreatedEdition",
+      "type": "event"
     },
     {
-      inputs: [
+      "inputs": [
+        { "internalType": "string", "name": "_name", "type": "string" },
+        { "internalType": "string", "name": "_symbol", "type": "string" },
+        { "internalType": "string", "name": "_description", "type": "string" },
+        { "internalType": "string", "name": "_imageUrl", "type": "string" },
+        { "internalType": "string", "name": "_contentType", "type": "string" },
+        { "internalType": "uint256", "name": "_editionSize", "type": "uint256" },
+        { "internalType": "uint256", "name": "_royaltyBPS", "type": "uint256" },
         {
-          internalType: "string",
-          name: "_name",
-          type: "string",
+          "internalType": "uint256",
+          "name": "_mintPeriodSeconds",
+          "type": "uint256"
         },
-        {
-          internalType: "string",
-          name: "_symbol",
-          type: "string",
-        },
-        {
-          internalType: "string",
-          name: "_description",
-          type: "string",
-        },
-        {
-          internalType: "string",
-          name: "_imageUrl",
-          type: "string",
-        },
-        {
-          internalType: "string",
-          name: "_contentType",
-          type: "string",
-        },
-        {
-          internalType: "uint256",
-          name: "_editionSize",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_royaltyBPS",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_mintPeriodSeconds",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_salePrice",
-          type: "uint256",
-        },
-        {
-          internalType: "string",
-          name: "_creatorName",
-          type: "string",
-        },
-        {
-          internalType: "string",
-          name: "_privateImage",
-          type: "string",
-        },
+        { "internalType": "uint256", "name": "_salePrice", "type": "uint256" },
+        { "internalType": "string", "name": "_creatorName", "type": "string" },
+        { "internalType": "bool", "name": "_hasPrivImage", "type": "bool" },
+        { "internalType": "string", "name": "_privateImage", "type": "string" }
       ],
-      name: "createEdition",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "nonpayable",
-      type: "function",
+      "name": "createEdition",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      inputs: [
-        {
-          internalType: "uint256",
-          name: "editionId",
-          type: "uint256",
-        },
+      "inputs": [
+        { "internalType": "uint256", "name": "editionId", "type": "uint256" }
       ],
-      name: "getEditionAtId",
-      outputs: [
-        {
-          internalType: "contract Edition",
-          name: "",
-          type: "address",
-        },
+      "name": "getEditionAtId",
+      "outputs": [
+        { "internalType": "contract Edition", "name": "", "type": "address" }
       ],
-      stateMutability: "view",
-      type: "function",
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [],
-      name: "implementation",
-      outputs: [
-        {
-          internalType: "address",
-          name: "",
-          type: "address",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
+      "inputs": [],
+      "name": "implementation",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view",
+      "type": "function"
+    }
   ];
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -353,6 +300,12 @@ export const useDropNFT = () => {
       );
 
       const privImage = ipfsHashPriv[0] ? ipfsHashPriv[0] : "NoPrivImage";
+      let hasPrivImage
+      if(privImage == "NoPrivImage"){
+        hasPrivImage = false
+      }else{
+        hasPrivImage = true
+      }
       Logger.log("ipfs hash ", {
         privImage,
         ipfsHash,
@@ -373,6 +326,7 @@ export const useDropNFT = () => {
         params.duration, //mintPeriodSeconds
         price, //YOK
         username, //CreatorName
+        hasPrivImage,
         privImage //PRIVURL
       );
 

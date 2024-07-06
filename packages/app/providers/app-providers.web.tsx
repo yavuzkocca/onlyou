@@ -18,7 +18,7 @@ import { UserProvider } from "app/providers/user-provider";
 import { WalletProvider } from "app/providers/wallet-provider";
 import { Web3Provider } from "app/providers/web3-provider";
 
-const activeChainId = ChainId.Mumbai;
+const activeChainId = ChainId.ArbitrumGoerli;
 
 const APIURL = "https://api.studio.thegraph.com/query/42974/onlyshow/v0.0.4";
 

@@ -14,35 +14,16 @@ import { Props as PressableProps } from "@showtime-xyz/universal.pressable";
 import { colors } from "@showtime-xyz/universal.tailwind";
 import { View } from "@showtime-xyz/universal.view";
 
-type LoginType =
-  | "apple"
-  | "google"
-  | "facebook"
-  | "twitter"
-  | "email"
-  | "wallet"
-  | "social";
+type LoginType = "wallet";
 type LoginButtonProps = PressableProps & {
   type: LoginType;
 };
 
 const BUTTON_TEXT = {
-  apple: "Continue with Apple",
-  google: "Continue with Google",
-  facebook: "Continue with Facebook",
-  twitter: "Continue with Twitter",
-  email: "Continue with Email",
   wallet: "Connect Wallet",
-  social: "Back to social login",
 };
 const BUTTON_ICON = {
-  apple: Apple,
-  google: GoogleOriginal,
-  facebook: Facebook,
-  twitter: Twitter,
-  email: Mail,
   wallet: Ethereum,
-  social: () => <></>,
 };
 
 export const LoginButton = ({ type, ...rest }: LoginButtonProps) => {

@@ -30,7 +30,7 @@ export const WebFooter = () => {
             />
           </Link>
           <Text tw="text-13 font-semibold text-gray-500">
-            &copy; {new Date().getFullYear()} Showtime Technologies, Inc.
+            &copy; {new Date().getFullYear()} Onlyou
           </Text>
         </View>
         <View tw="flex flex-row justify-between">

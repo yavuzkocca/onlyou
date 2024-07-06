@@ -14,7 +14,6 @@ export type SubmitWalletParams = {
 };
 export const useLogin = (onLogin?: () => void) => {
   const loginSource = useRef<LoginSource>("undetermined");
-  //const { rudder } = useRudder();
 
   //#region hooks
   const { authenticationStatus, logout } = useAuth();
@@ -28,7 +27,6 @@ export const useLogin = (onLogin?: () => void) => {
     //@ts-ignore web only
     verifySignature,
   } = useWalletLogin();
-  //const { loginWithEmail, loginWithPhoneNumber } = useMagicLogin();
   const isWeb = Platform.OS === "web";
   //#endregion
 
@@ -41,7 +39,6 @@ export const useLogin = (onLogin?: () => void) => {
     if (process.env.NODE_ENV === "development" || __DEV__) {
       console.error(error);
     }
-
     captureException(error, {
       tags: {
         login_signature_flow: "use-login.ts",
@@ -86,9 +83,6 @@ export const useLogin = (onLogin?: () => void) => {
   //#region effects
   useStableBlurEffect(handleBlur);
   useEffect(() => {
-    // const isLoggedInByMagic =
-    //   loginSource.current === "magic" &&
-    //   authenticationStatus === "AUTHENTICATED";
     const isLoggedInByWallet =
       loginSource.current === "wallet" && walletStatus === "EXPIRED_NONCE";
 

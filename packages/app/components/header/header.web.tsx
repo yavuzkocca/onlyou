@@ -72,7 +72,7 @@ export const SearchInHeader = () => {
 
       <Popover.Anchor>
         <Input
-          placeholder="Search for @name or name.eth"
+          placeholder="Search for @name or name"
           autocomplete="off"
           value={term}
           ref={inputRef}

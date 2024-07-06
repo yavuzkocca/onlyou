@@ -22,10 +22,10 @@ export const DropSelect = () => {
   return (
     <BottomSheetScrollView>
       <View tw="flex-row flex-wrap items-center justify-center">
-        <View tw="mt-6 w-full px-4 lg:w-[360px]">
+        <View tw="mt-6 mb-8 w-full px-4 lg:w-[360px]">
           <CreateCard
             title="Free drop"
-            description="Give your fans a free collectible."
+            description="Give your fans a free collectible to show appreciation, expand your community, and encourage more engagement and interaction."
             ctaLabel="Create Free Drop"
             icon={
               <Gift color={isDark ? "black" : "white"} height={16} width={16} />
@@ -38,35 +38,10 @@ export const DropSelect = () => {
             }}
           />
         </View>
-        {/* <View tw="mt-6 w-full px-4 lg:w-[360px]">
+
+        <View tw="mt-6 mb-8 w-full px-4 lg:w-[360px]">
           <CreateCard
-            title="Music drop"
-            icon={
-              <Spotify
-                color={isDark ? "black" : "white"}
-                height={16}
-                width={16}
-              />
-            }
-            description="Promote your latest music: give your fans a free collectible for saving your song to their library."
-            ctaLabel={
-              canCreateMusicDrop ? "Create Music Drop" : "Request Access"
-            }
-            onPress={() => {
-              if (Platform.OS !== "web") {
-                router.pop();
-              }
-              if (canCreateMusicDrop) {
-                router.push("/drop/music");
-              } else {
-                Linking.openURL("https://showtimexyz.typeform.com/to/pXQVhkZo");
-              }
-            }}
-          />
-        </View> */}
-        <View tw="mt-6 w-full px-4 lg:w-[360px]">
-          <CreateCard
-            title="PRIV Drop"
+            title="Private Drop"
             icon={
               <Globe
                 color={isDark ? "black" : "white"}
@@ -74,8 +49,8 @@ export const DropSelect = () => {
                 width={16}
               />
             }
-            description="Connect with fans who show up to your events. This drop lets people mark themselves at your event location."
-            ctaLabel="Create Priv Drop"
+            description="Create a private drop where the collectors purchase NFTs, ensuring they are not free and must be paid to obtain."
+            ctaLabel="Create Private Drop"
             onPress={() => {
               if (Platform.OS !== "web") {
                 router.pop();
@@ -84,7 +59,7 @@ export const DropSelect = () => {
             }}
           />
         </View>
-        <View tw="mt-6 w-full px-4 lg:w-[360px]">
+        {/* <View tw="mt-6 w-full px-4 lg:w-[360px]">
           <CreateCard
             title="Private drop"
             icon={
@@ -99,7 +74,7 @@ export const DropSelect = () => {
               router.push("/drop/private");
             }}
           />
-        </View>
+        </View> */}
       </View>
     </BottomSheetScrollView>
   );
