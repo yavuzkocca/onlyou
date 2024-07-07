@@ -138,7 +138,7 @@ export const DropFree = () => {
   const bottomBarHeight = useBottomTabBarHeight();
   // const [transactionId, setTransactionId] = useParam('transactionId')
   const user = useUser();
-  const username = user.user.data.data.profile.username;
+  const username = user?.user?.data?.data.profile.username;
 
   const { state, dropNFT, reset } = useDropNFT();
 
@@ -210,9 +210,8 @@ export const DropFree = () => {
   }
 
   if (state.status === "success") {
-    const claimPath = `/nft/${[process.env.NEXT_PUBLIC_CHAIN_ID]}/${
-      state.edition?.editionContractAddress
-    }/0`;
+    const claimPath = `/nft/${[process.env.NEXT_PUBLIC_CHAIN_ID]}/${state.edition?.editionContractAddress
+      }/0`;
     let claimUrl = `https://${process.env.NEXT_PUBLIC_WEBSITE_DOMAIN}${claimPath}`;
     //const qrCodeUrl = new URL(claimUrl);
 
@@ -245,11 +244,10 @@ export const DropFree = () => {
                 Linking.openURL(
                   getTwitterIntent({
                     url: claimUrl,
-                    message: `I just created a drop "${
-                      state.edition?.name
-                    }" by ${getTwitterIntentUsername(
-                      user?.user?.data?.profile
-                    )} on @Showtime_xyz! 🎁🔗\n\nCollect it for free here:`,
+                    message: `I just created a drop "${state.edition?.name
+                      }" by ${getTwitterIntentUsername(
+                        user?.user?.data?.profile
+                      )} on @Showtime_xyz! 🎁🔗\n\nCollect it for free here:`,
                   })
                 );
               }}
@@ -313,7 +311,7 @@ export const DropFree = () => {
     );
   }
 
-  const wallet_address = user.user.data.data.profile.wallet_address;
+  const wallet_address = user?.user?.data?.data.profile.wallet_address;
 
   const handleFileChange = (fileObj: FilePickerResolveValue) => {
     const { file, size } = fileObj;
@@ -525,9 +523,8 @@ export const DropFree = () => {
                     </View>
                     <ScrollView tw="flex-row" horizontal={true}>
                       <DataPill
-                        label={`${watch("editionSize")} ${
-                          watch("editionSize") == 1 ? "Edition" : "Editions"
-                        }`}
+                        label={`${watch("editionSize")} ${watch("editionSize") == 1 ? "Edition" : "Editions"
+                          }`}
                         type="text"
                       />
                       <DataPill
@@ -682,8 +679,8 @@ export const DropFree = () => {
               {state.status === "loading"
                 ? "Creating... it should take about 10 seconds"
                 : state.status === "error"
-                ? "Failed. Please retry!"
-                : "Drop now"}
+                  ? "Failed. Please retry!"
+                  : "Drop now"}
             </Button>
 
             {state.editon?.data.transactionHash ? (

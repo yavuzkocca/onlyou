@@ -91,12 +91,30 @@ export const Preview = ({
   return null;
 };
 
+// export const getLocalFileURI = (file?: string | File) => {
+//   if (!file) return null;
+
+//   if (typeof file === "string") return file;
+
+//   if (Platform.OS === "web") return (URL || webkitURL)?.createObjectURL(file);
+
+//   return file;
+// };
+
 export const getLocalFileURI = (file?: string | File) => {
   if (!file) return null;
 
   if (typeof file === "string") return file;
 
-  if (Platform.OS === "web") return (URL || webkitURL)?.createObjectURL(file);
+  if (Platform.OS === "web") {
+    const createObjectURL = (window.URL || window.webkitURL)?.createObjectURL;
+    if (createObjectURL && file instanceof Blob) {
+      return createObjectURL(file);
+    } else {
+      console.error("createObjectURL is not available or the file is not a valid Blob.");
+      return null;
+    }
+  }
 
   return file;
 };

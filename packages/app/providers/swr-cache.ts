@@ -3,7 +3,7 @@ type SWRCacheType = {
   get: (key: string) => any;
 };
 
-const persistCacheKeys = ["/v2/trending/nfts", "/api/users/myinfo"];
+const persistCacheKeys = ["/api/v2/trending/nfts", "/api/users/myinfo"];
 
 export const setupSWRCache = ({ set, get }: SWRCacheType) => {
   const appCache = get("app-cache");

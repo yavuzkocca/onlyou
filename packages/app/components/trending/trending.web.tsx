@@ -32,7 +32,7 @@ const TrendingHeaderContext = createContext<{
   setDays: (type: string) => void;
 }>({
   days: undefined,
-  setDays: () => {},
+  setDays: () => { },
 });
 const { useParam } = createParam<Query>();
 const Header = () => {
@@ -68,13 +68,14 @@ export const Trending = () => {
     contentWidth <= breakpoints["md"]
       ? 3
       : contentWidth >= breakpoints["lg"]
-      ? 3
-      : 2;
+        ? 3
+        : 2;
   const [days, setDays] = useParam("days", { initial: "1" });
 
   const { data: list, isLoading } = useTrendingNFTS({
     days: Number(days),
   });
+  console.log("LISTa" + JSON.stringify(list))
   const chuckList = useMemo(() => {
     return chunk(list, numColumns);
   }, [list, numColumns]);
@@ -98,9 +99,8 @@ export const Trending = () => {
               key={item.nft_id}
               nft={item}
               numColumns={numColumns}
-              href={`/list?initialScrollIndex=${
-                itemIndex * numColumns + chuckItemIndex
-              }&days=${days}&type=trendingNFTs`}
+              href={`/list?initialScrollIndex=${itemIndex * numColumns + chuckItemIndex
+                }&days=${days}&type=trendingNFTs`}
             />
           ))}
           {chuckItem.length < numColumns &&

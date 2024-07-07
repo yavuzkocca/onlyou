@@ -556,9 +556,9 @@ export const obfuscatePhoneNumber = (phoneNumber: string) => {
 
 //#region format profile routers
 const ProfileTabNameMap = new Map([
-  ["owned", "collected"],
+  ["owned", "FreeNFTs"],
   ["created", "drops"],
-  ["PrivNFTS", "PrivNFTS"],
+  ["PrivNFTS", "PrivateNFTs"],
 ]);
 
 const getProfileTitle = (name: string) => {

@@ -98,7 +98,7 @@ export const useTrendingCreators = ({ days }: { days: number }) => {
 
 export const useTrendingNFTS = ({ days }: { days: number }) => {
   const trendingUrlFn = useCallback(() => {
-    const url = `/v2/trending/nfts?timeframe=${
+    const url = `/api/v2/trending/nfts?timeframe=${
       days === 1 ? "day" : days === 7 ? "week" : days === 30 ? "month" : "all"
     }`;
     return url;

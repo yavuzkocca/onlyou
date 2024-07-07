@@ -9,7 +9,9 @@ import {
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
+import { getAccessToken } from "../../lib/access-token";
 
+import { axios } from "app/lib/axios";
 import { Accordion } from "@showtime-xyz/universal.accordion";
 import { Alert } from "@showtime-xyz/universal.alert";
 import { Button } from "@showtime-xyz/universal.button";
@@ -27,9 +29,10 @@ import { View } from "@showtime-xyz/universal.view";
 import { BottomSheetScrollView } from "app/components/bottom-sheet-scroll-view";
 import { CompleteProfileModalContent } from "app/components/complete-profile-modal-content";
 import { PolygonScanButton } from "app/components/polygon-scan-button";
-import { Preview } from "app/components/preview";
+import { PreviewPrivate } from "app/components/preview/private";
+import { Preview } from "app/components/preview/index";
 import { QRCode } from "app/components/qr-code";
-import { MAX_FILE_SIZE, UseDropNFT, useDropNFT } from "app/hooks/use-drop-nft";
+import { MAX_FILE_SIZE, UseDropNFT, useDropNFT } from "app/hooks/use-drop-nft-private";
 import { useModalScreenViewStyle } from "app/hooks/use-modal-screen-view-style";
 import { usePersistForm } from "app/hooks/use-persist-form";
 import { useRedirectToCreateDrop } from "app/hooks/use-redirect-to-create-drop";
@@ -125,7 +128,10 @@ export const DropEvent = () => {
   // const [transactionId, setTransactionId] = useParam('transactionId')
   //const spotifyTextInputRef = React.useRef<TextInput | null>(null);
   const user = useUser();
-  const username = user.user.data.data.profile.username;
+  const username = user?.user?.data?.data.profile.username;
+  const accessToken = getAccessToken();
+  const [privateHash, setPrivateHash] = useState("")
+  console.log(JSON.stringify(privateHash) + "PHASH")
 
   const { state, dropNFT, reset } = useDropNFT();
 
@@ -149,31 +155,13 @@ export const DropEvent = () => {
   });
 
   const onSubmit = (values: UseDropNFT) => {
-    dropNFT(values, clearStorage, username);
+    dropNFT(values, clearStorage, username, privateHash);
   };
-
-  // useEffect(() => {
-  //   if (transactionId) {
-  //     pollTransaction(transactionId)
-  //   }
-  // }, [transactionId])
-
-  // useEffect(() => {
-  //   if (state.transactionId) {
-  //     setTransactionId(transactionId)
-  //   }
-  // }, [state.transactionId])
 
   const pickFile = useFilePicker();
   const share = useShare();
   const router = useRouter();
   const modalScreenViewStyle = useModalScreenViewStyle({ mode: "margin" });
-
-  // if (state.transactionHash) {
-  //   return <View>
-  //     <Text>Loading</Text>
-  //   </View>
-  // }
 
   const selectedDuration = watch("duration");
 
@@ -197,11 +185,6 @@ export const DropEvent = () => {
       }/0`;
     let claimUrl = `https://${process.env.NEXT_PUBLIC_WEBSITE_DOMAIN}${claimPath}`;
     const qrCodeUrl = new URL(claimUrl);
-
-    // const password = getValues("password");
-    // if (password) {
-    //   qrCodeUrl.searchParams.set("password", password);
-    // }
 
     const isShareAPIAvailable = Platform.select({
       default: true,
@@ -254,15 +237,6 @@ export const DropEvent = () => {
                 const result = await share({
                   url: claimUrl,
                 });
-
-                // if (result.action === "sharedAction") {
-                //   rudder?.track(
-                //     "Drop Shared",
-                //     result.activityType
-                //       ? { type: result.activityType }
-                //       : undefined
-                //   );
-                // }
               }}
             >
               {isShareAPIAvailable
@@ -288,30 +262,14 @@ export const DropEvent = () => {
               Skip for now
             </Button>
           </View>
-          <View tw="mt-4">
-            <QRCode
-              size={windowWidth >= 768 ? 400 : windowWidth >= 400 ? 250 : 300}
-              text={qrCodeUrl.toString()}
-            />
-          </View>
         </View>
       </BottomSheetScrollView>
     );
   }
 
-  const wallet_address = user.user.data.data.profile.wallet_address;
+  const wallet_address = user?.user?.data?.data.profile.wallet_address;
 
-  // if (!primaryWallet) {
-  //   return (
-  //     <AddWalletOrSetPrimary
-  //       onPrimaryWalletSetCallback={redirectToCreateDrop}
-  //       title="Choose a primary wallet to create your drop"
-  //       description="Please choose which wallet will receive your drop. You only have to do this once!"
-  //     />
-  //   );
-  // }
-
-  const handleFileChange = (fileObj: FilePickerResolveValue) => {
+  const handleFileChange = async (fileObj: FilePickerResolveValue) => {
     const { file, size } = fileObj;
     let extension;
     // On Native file is a string uri
@@ -339,8 +297,27 @@ export const DropEvent = () => {
     } else {
       clearErrors("file");
       setValue("file", file);
+
+      if (file) {
+        try {
+          const formData = new FormData();
+          formData.append('privImage', file);
+
+          const response = await axios({
+            url: "/api/users/blur",
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            data: formData,
+          });
+          setPrivateHash(response)
+        } catch (error) {
+        }
+      }
     }
   };
+
   const handleFileChange2 = (fileObj: FilePickerResolveValue) => {
     const { file, size } = fileObj;
     let extension;
@@ -393,12 +370,13 @@ export const DropEvent = () => {
 
                           handleFileChange(file);
                           console.log(`filessssf ${value}`);
+
                         }}
                         tw="h-[120px] w-[120px] items-center justify-center overflow-hidden rounded-lg md:h-64 md:w-64"
                       >
                         {value ? (
                           <View>
-                            <Preview
+                            <PreviewPrivate
                               file={value}
                               width={windowWidth >= 768 ? 256 : 120}
                               height={windowWidth >= 768 ? 256 : 120}
@@ -596,28 +574,6 @@ export const DropEvent = () => {
               }}
             />
           </Hidden>
-
-          {/* <View tw="mt-4 flex-row">
-            <Controller
-              control={control}
-              name="googleMapsUrl"
-              render={({ field: { onChange, onBlur, value } }) => {
-                return (
-                  <Fieldset
-                    tw="flex-1"
-                    label="Location"
-                    onBlur={onBlur}
-                    helperText="The location where people can collect the drop from"
-                    errorText={errors.googleMapsUrl?.message}
-                    value={value?.toString()}
-                    onChangeText={onChange}
-                    placeholder="Enter the Google Maps link of the location"
-                  />
-                );
-              }}
-            />
-          </View> */}
-
           <View tw="mt-4 flex-row">
             <Controller
               control={control}

@@ -23,7 +23,7 @@ type PreviewProps = {
 
 const StyledVideo = styled(Video);
 
-export const Preview = ({
+export const PreviewPrivate = ({
   tw = "",
   style,
   type,

@@ -258,40 +258,7 @@ export const useDropNFT = () => {
         },
       });
 
-      const fileMetaDataPriv = await getFileMeta(params.file2);
-
-      if (
-        fileMetaDataPriv &&
-        typeof fileMetaDataPriv.size === "number" &&
-        fileMetaDataPriv.size > MAX_FILE_SIZE
-      ) {
-        Alert.alert(
-          `This file is too big. Please use a file smaller than 50 MB.`
-        );
-        return;
-      }
-      const ipfsHashPriv = await upload({
-        data: [params.file2],
-        options: {
-          uploadWithGatewayUrl: true,
-          uploadWithoutDirectory: true,
-        },
-      });
-
       const price = params.price ? params.price : "0";
-
-      // const ipfsHash = await uploadMedia({
-      //   file: params.file,
-      //   notSafeForWork: params.notSafeForWork,
-      // });
-
-      // if (!ipfsHash) {
-      //   dispatch({
-      //     type: "error",
-      //     error: "Failed to upload the media on IPFS. Please try again!",
-      //   });
-      //   return;
-      // }
 
       const escapedTitle = JSON.stringify(params.title).slice(1, -1);
       const escapedDescription = JSON.stringify(params.description).slice(
@@ -299,13 +266,8 @@ export const useDropNFT = () => {
         -1
       );
 
-      const privImage = ipfsHashPriv[0] ? ipfsHashPriv[0] : "NoPrivImage";
-      let hasPrivImage
-      if(privImage == "NoPrivImage"){
-        hasPrivImage = false
-      }else{
-        hasPrivImage = true
-      }
+      const privImage = "NoPrivImage";
+      let hasPrivImage = false
       Logger.log("ipfs hash ", {
         privImage,
         ipfsHash,

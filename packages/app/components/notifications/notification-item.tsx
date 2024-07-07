@@ -72,8 +72,8 @@ export const NotificationItem = ({
             url={notification.img_url}
             size={24}
             username={
-              notification.actors[0]?.username ||
-              notification.actors[0]?.wallet_address
+              notification.actor?.username ||
+              notification.actor?.wallet_address
             }
             alt="Notification Avatar"
           />
